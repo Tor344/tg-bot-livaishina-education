@@ -14,8 +14,7 @@ router = Router()
 
 
 @router.callback_query(F.data == "question")
-async def question(call: CallbackQuery, state: FSMContext, session: AsyncSession):
-    repo = UserRepository(session)
+async def question(call: CallbackQuery, state: FSMContext):
     await call.answer("")
     await state.set_state(Question.dialogue)
 
@@ -23,31 +22,33 @@ async def question(call: CallbackQuery, state: FSMContext, session: AsyncSession
 
 
 @router.message(StateFilter(Question.dialogue))
-async def question(message: Message, state: FSMContext):
+async def question(message: Message, state: FSMContext,session: AsyncSession):
+    repo = UserRepository(session)
+    id_that_admin = await repo.get_that_id_admin()
     message_text = f"""ID_USER: {message.from_user.id}
 NAME_USER: @{message.from_user.username}
 
 Сообщение: {message.text}
     """
 
-    await message.bot.send_message(-5263441534, message_text)
-
+    await message.bot.send_message(str(id_that_admin.id_that), message_text)
     await message.answer("[Сообщение отправлено модериции. Вам скоро придет ответ ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 2]",
                          reply_markup=core_keyboards.main_inline_keyboard)
+
     await state.clear()
 
 
 @router.message(F.text)
-async def question(message: Message):
-    if message.chat.id != -5263441534:
+async def question(message: Message, session:AsyncSession):
+    repo = UserRepository(session)
+    id_that_admin = await repo.get_that_id_admin()
+    if message.chat.id != id_that_admin.id_that:
         return
     if not message.reply_to_message:
         return
 
     id_user_match = re.search(r'ID_USER:\s*(\d+)', message.reply_to_message.text)
     id_user = int(id_user_match.group(1)) if id_user_match else None
-
+    if id_user is None:
+        return
     await message.bot.send_message(id_user, f"[Ответ модерации ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 2]:\n {message.text}")
-
-
-

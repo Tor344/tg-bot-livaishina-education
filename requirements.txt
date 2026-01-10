@@ -6,3 +6,4 @@ aiosqlite
 sqladmin
 uvicorn
 fastapi
+itsdangerous
