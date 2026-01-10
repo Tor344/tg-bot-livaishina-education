@@ -18,7 +18,7 @@ async def question(call: CallbackQuery, state: FSMContext):
     await call.answer("")
     await state.set_state(Question.dialogue)
 
-    await call.message.answer("Здравствуйте. Здесь вы можете написать вопрос поддежке, которая вам оперативно ответит")
+    await call.message.answer("[Здравствуйте. Здесь вы можете написать вопрос поддежке ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 4]")
 
 
 @router.message(StateFilter(Question.dialogue))
@@ -51,4 +51,4 @@ async def question(message: Message, session:AsyncSession):
     id_user = int(id_user_match.group(1)) if id_user_match else None
     if id_user is None:
         return
-    await message.bot.send_message(id_user, f"[Ответ модерации ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 2]:\n {message.text}")
+    await message.bot.send_message(id_user, f"[Ответ модерации ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 3]:\n {message.text}")
