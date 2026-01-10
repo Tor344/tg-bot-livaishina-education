@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.database.repository import UserRepository
 
+from bot.apps.start.keyboards import *
 router = Router()
 
 
@@ -16,4 +17,4 @@ async def start(message: Message, session: AsyncSession):
     if not user:
         await repo.create(message.from_user.id)
 
-    await message.answer("Hello World")
+    await message.answer("[ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 1]",reply_markup= start_inline_keyboard)
