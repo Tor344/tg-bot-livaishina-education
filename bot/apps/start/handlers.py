@@ -1,4 +1,5 @@
 from aiogram import Router, F
+from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -27,3 +28,8 @@ async def start(call: CallbackQuery, session: AsyncSession):
     await call.message.delete()
 
     await call.message.answer("[ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 1]",reply_markup= core_keyboards.start_inline_keyboard)
+
+
+@router.message(Command("chat_id"))
+async def print_chat_id(message: Message):
+    await message.answer(f"id чата: {message.chat.id}")
