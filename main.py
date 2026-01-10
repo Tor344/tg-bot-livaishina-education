@@ -2,6 +2,7 @@ import asyncio
 import sys
 import logging
 
+from bot.apps.question.handlers import router as question_router
 from aiogram import Bot, Dispatcher
 
 import config.settings as set
@@ -32,6 +33,7 @@ dp.include_router(user_click_router)
 dp.include_router(user_router)
 dp.include_router(admin_router)
 dp.include_router(start_router)
+dp.include_router(question_router)
 
 
 async def init_db():

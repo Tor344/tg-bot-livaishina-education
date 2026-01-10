@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from .models import User
+from .models import User, ThatAdmin
+
 
 class UserRepository:
     def __init__(self, session: AsyncSession):
@@ -17,3 +18,7 @@ class UserRepository:
         self.session.add(user)
         await self.session.commit()
         return user
+
+    async def get_that_id_admin(self) -> ThatAdmin | None:
+        result = await self.session.execute(select(ThatAdmin).where(ThatAdmin.id == 1))
+        return result.scalar_one_or_none()
