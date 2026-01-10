@@ -5,3 +5,6 @@ load_dotenv()
 
 API_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
+
+NAME_ADMIN = os.getenv("NAME_ADMIN")
+PASSWORD = os.getenv("PASSWORD")
