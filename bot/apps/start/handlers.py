@@ -19,15 +19,14 @@ async def start(message: Message, session: AsyncSession):
     if not user:
         await repo.create(message.from_user.id)
 
-    await message.answer("[ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 1]",reply_markup= core_keyboards.start_inline_keyboard)
+    await message.answer("Привет, это бот-помощник по курсу, выбирай категорию 👇",reply_markup= core_keyboards.start_inline_keyboard)
 
 @router.callback_query(F.data == "main")
-async def start(call: CallbackQuery, session: AsyncSession):
-    repo = UserRepository(session)
+async def start(call: CallbackQuery):
     await call.answer("")
     await call.message.delete()
 
-    await call.message.answer("[ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 1]",reply_markup= core_keyboards.start_inline_keyboard)
+    await call.message.answer("Привет, это бот-помощник по курсу, выбирай категорию 👇",reply_markup= core_keyboards.start_inline_keyboard)
 
 
 @router.message(Command("chat_id"))

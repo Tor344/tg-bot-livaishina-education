@@ -9,6 +9,6 @@ router = Router()
 async def schedule(call: CallbackQuery):
     await call.message.delete()
     await call.answer()
-    await call.message.answer("[ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 5]",reply_markup=core_keyboards.main_inline_keyboard)
+    await call.message.answer("Скоро будет добавленно 5",reply_markup=core_keyboards.main_inline_keyboard)
 
-    await message.answer("materials")
+

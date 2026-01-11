@@ -11,4 +11,3 @@ async def schedule(call: CallbackQuery):
     await call.answer()
     await call.message.answer("[ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 6]",reply_markup=core_keyboards.main_inline_keyboard)
 
-    await message.answer("homework")
