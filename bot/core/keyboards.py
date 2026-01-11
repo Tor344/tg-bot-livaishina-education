@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeybo
 admin_inline_keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="admin",callback_data='admin_inline_keyboard')]])
 
 start_inline_keyboard = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text="Домашки",callback_data='homework')],
+
     [InlineKeyboardButton(text="Дедлайны",callback_data='deadlines')],
     [InlineKeyboardButton(text="Расписание",callback_data='schedule')],
     [InlineKeyboardButton(text="Задать вопрос/Отправить домашку",callback_data='question')],])
