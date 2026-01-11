@@ -3,6 +3,7 @@ from aiogram.types import Message,CallbackQuery,InputMediaPhoto,FSInputFile
 from aiogram.filters import Command
 
 import bot.core.keyboards as core_keyboards
+import bot.apps.schedule.keyboards as schedule_keyboards
 router = Router()
 
 @router.callback_query(F.data == "schedule")
@@ -21,8 +22,11 @@ async def schedule(call: CallbackQuery):
         ) for path in paths
     ]
 
-    await call.message.bot.send_media_group(
-        chat_id=call.message.chat.id,
-        media=media,
-     )
-    await call.message.answer("На главную",reply_markup=core_keyboards.main_inline_keyboard)
+    sent_messages = await call.message.bot.send_media_group(chat_id=call.message.chat.id, media=media)
+
+    # Сохраняем ID только первого сообщения медиа-группы
+    media_ids_str = ",".join(str(msg.message_id) for msg in sent_messages)
+
+
+    await call.message.answer("Ваше расписание", reply_markup=schedule_keyboards.main_from_mediagroup(media_ids_str))
+

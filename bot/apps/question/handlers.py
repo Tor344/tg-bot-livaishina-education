@@ -32,7 +32,7 @@ NAME_USER: @{message.from_user.username}
     """
 
     await message.bot.send_message(str(id_that_admin.id_that), message_text)
-    await message.answer("[Сообщение отправлено модериции. Вам скоро придет ответ ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 2]",
+    await message.answer("Отправленно. Вам скоро придет ответ",
                          reply_markup=core_keyboards.main_inline_keyboard)
 
     await state.clear()
@@ -51,4 +51,4 @@ async def question(message: Message, session:AsyncSession):
     id_user = int(id_user_match.group(1)) if id_user_match else None
     if id_user is None:
         return
-    await message.bot.send_message(id_user, f"[Ответ модерации ТЕКСТ КОТОРЫЙ НУЖНО ЗАПОЛНИТЬ 3]:\n {message.text}")
+    await message.bot.send_message(id_user, f"Ответ на ваш вопрос:\n {message.text}")

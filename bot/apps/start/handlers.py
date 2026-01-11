@@ -29,6 +29,19 @@ async def start(call: CallbackQuery):
     await call.message.answer("Привет, это бот-помощник по курсу, выбирай категорию 👇",reply_markup= core_keyboards.start_inline_keyboard)
 
 
+@router.callback_query(F.data.startswith("main_from_mediagroup:"))
+async def start(call: CallbackQuery):
+    _, media_ids_str = call.data.split(":", 1)
+    media_ids = [int(msg_id) for msg_id in media_ids_str.split(",")]
+
+    chat_id = call.message.chat.id
+    await call.bot.delete_messages(chat_id, media_ids)
+    await call.answer("")
+    await call.message.delete()
+
+    await call.message.answer("Привет, это бот-помощник по курсу, выбирай категорию 👇",reply_markup= core_keyboards.start_inline_keyboard)
+
+
 @router.message(Command("chat_id"))
 async def print_chat_id(message: Message):
     await message.answer(f"id чата: {message.chat.id}")
