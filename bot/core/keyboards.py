@@ -6,7 +6,7 @@ start_inline_keyboard = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text="Домашки",callback_data='homework')],
     [InlineKeyboardButton(text="Дедлайны",callback_data='deadlines')],
     [InlineKeyboardButton(text="Расписание",callback_data='schedule')],
-    [InlineKeyboardButton(text="Задать вопрос",callback_data='question')],])
+    [InlineKeyboardButton(text="Задать вопрос/Отправить домашку",callback_data='question')],])
 
 main_inline_keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="На главную",callback_data='main')]],)
 
