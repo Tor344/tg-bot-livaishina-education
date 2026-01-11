@@ -18,7 +18,7 @@ async def question(call: CallbackQuery, state: FSMContext):
     await call.answer("")
     await state.set_state(Question.dialogue)
 
-    await call.message.answer("Здравствуйте. Здесь вы можете написать вопрос поддежке, Алия и кураторы ответят вам в течении дня, как можно скорее")
+    await call.message.answer("Здравствуйте. Здесь вы можете написать вопрос поддержке, Алия и кураторы ответят вам в течении дня, как можно скорее")
 
 
 @router.message(StateFilter(Question.dialogue))
