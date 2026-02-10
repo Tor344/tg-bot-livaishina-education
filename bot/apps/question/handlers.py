@@ -8,19 +8,28 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.database.repository import UserRepository
 from bot.apps.question.state_fms import Question
+import bot.apps.question.keyboards as question_keyboards
 import bot.core.keyboards as core_keyboards
 
 router = Router()
 
-
+#переход пользователя в диалог
 @router.callback_query(F.data == "question")
 async def question(call: CallbackQuery, state: FSMContext):
     await call.answer("")
     await state.set_state(Question.dialogue)
 
-    await call.message.answer("Здравствуйте. Здесь вы можете написать вопрос поддержке, Алия и кураторы ответят вам в течении дня, как можно скорее")
+    await call.message.answer("""Здравствуйте! Здесь вы можете задать вопрос в службу поддержки. Алия и кураторы ответят вам в течение дня как можно скорее.
+Чтобы выйти из диалога, нажмите кнопку внизу экрана.""",reply_markup=question_keyboards.dialogue_break)
 
+#Выход из диалога
+@router.message(F.text == "Выйти из диалога", StateFilter(Question.dialogue))
+async def question(message: Message, state: FSMContext,session: AsyncSession):
+    await message.answer("Привет, это бот-помощник по курсу, выбирай категорию 👇",reply_markup= core_keyboards.start_inline_keyboard)
 
+    await state.clear()
+
+#обработка сообщений пользователя 
 @router.message(StateFilter(Question.dialogue))
 async def question(message: Message, state: FSMContext,session: AsyncSession):
     repo = UserRepository(session)
@@ -32,18 +41,14 @@ NAME_USER: @{message.from_user.username}
     """
 
     await message.bot.send_message(str(id_that_admin.id_that), message_text)
-    await message.answer("Отправленно. Вам скоро придет ответ",
-                         reply_markup=core_keyboards.main_inline_keyboard)
-
-    await state.clear()
-
+    
 
 @router.message(F.text)
 async def question(message: Message, session:AsyncSession):
     repo = UserRepository(session)
     id_that_admin = await repo.get_that_id_admin()
     if message.chat.id != id_that_admin.id_that:
-        return
+        await message.answer("Возможно вы хотели ответить аминистратора. Для этого перейдите в 'Задать вопрос / Отправить домашку'")
     if not message.reply_to_message:
         return
 
