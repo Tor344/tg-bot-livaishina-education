@@ -25,6 +25,7 @@ async def question(call: CallbackQuery, state: FSMContext):
 #Выход из диалога
 @router.message(F.text == "Выйти из диалога", StateFilter(Question.dialogue))
 async def question(message: Message, state: FSMContext,session: AsyncSession):
+    await message.answer("Вы вышли из диалога",reply_markup=question_keyboards.remove_keyboard)
     await message.answer("Привет, это бот-помощник по курсу, выбирай категорию 👇",reply_markup= core_keyboards.start_inline_keyboard)
 
     await state.clear()
