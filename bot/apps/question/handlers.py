@@ -49,7 +49,7 @@ async def question(message: Message, session:AsyncSession):
     repo = UserRepository(session)
     id_that_admin = await repo.get_that_id_admin()
     if message.chat.id != id_that_admin.id_that:
-        await message.answer("Возможно вы хотели ответить аминистратора. Для этого перейдите в 'Задать вопрос / Отправить домашку'")
+        await message.answer("Возможно вы хотели задать вопрос или отправить свою работу на проверку. Для этого перезагрузите бот /start и выберете «задать вопрос/отправить домашку» и после этого отправляйте сообщение")
     if not message.reply_to_message:
         return
 
